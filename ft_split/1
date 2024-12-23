@@ -3,29 +3,30 @@
 
 int	cheak_if_whitespace(char c)
 {
-	return (c >= 9 && c <= 13 || c == ' ');
+	return ((c >= 9 && c <= 13) || c == ' ');
 }
 
 int ft_strlen(char *str)
 {
-	int counter =0;
-	int i=0;
+	int i = 0;
 	while(str[i] && !cheak_if_whitespace(str[i]))
-		counter++;
-	return (counter);
+		i++;
+	return (i);
 }
 
 int	count_word(char *ptr)
 {
-	int counter =0;
+	int counter = 0;
 	while(*ptr)
 	{
-		while( *ptr && !cheak_if_whitespace(*ptr))
+		while(*ptr && cheak_if_whitespace(*ptr))
 			ptr++;
-		if (cheak_if_whitespace(*ptr))
+		if (*ptr && !cheak_if_whitespace(*ptr))
+		{
 			counter++;
-		while( *ptr &&  !cheak_if_whitespace(*ptr))
-			ptr++;
+			while(*ptr &&  !cheak_if_whitespace(*ptr))
+				ptr++;
+		}
 	}
 	return (counter);
 }
@@ -50,12 +51,12 @@ char**	ft_split(char *str)
 {
 	int count = count_word(str);
 	char**	split = (char**)malloc(sizeof(char *) * (count + 1));
-	if (!(**split))
+	if (!split)
 		return NULL;
 	int i=0;
 	while (*str)
 	{
-		while (cheak_if_whitespace(*str))
+		while (*str && cheak_if_whitespace(*str))
 			str++;
 		if(*str && !cheak_if_whitespace(*str))
 		{
@@ -64,7 +65,6 @@ char**	ft_split(char *str)
 		}
 		while (*str && !cheak_if_whitespace(*str))
                 	str++;
-		str++;
 	}
 	split[i] = NULL;
 	return (split);
