@@ -21,7 +21,7 @@ size_t ft_strspn(const char *s, const char *accept)
 
 int main()
 {
-	char str[] = "raji";
+	char str[] = "raji youssef";
 	char ptr[] = "raji";
 	size_t res = ft_strspn(str,ptr);
 	size_t res1 = strspn(str,ptr);
