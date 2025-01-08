@@ -17,9 +17,9 @@ void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
         if ((*cmp)(current->data, data_ref) == 0)
         {
             t_list *to_free = current;
-            if (previous == NULL)
+            if (previous == NULL) // in the case of the first time you enter 
                 *begin_list = current->next;
-            else
+            else // in the normal case 
                 previous->next = current->next;
             current = current->next;
             free(to_free);
