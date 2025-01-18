@@ -7,29 +7,32 @@ typedef struct s_list
     void *data;
 } t_list;
 
-void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
+t_list	*ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
 {
-    t_list *current = *begin_list;
-    t_list *previous = NULL;
-
-    while (current)
-    {
-        if ((*cmp)(current->data, data_ref) == 0)
-        {
-            t_list *to_free = current;
-            if (previous == NULL) // in the case of the first time you enter 
-                *begin_list = current->next;
-            else // in the normal case 
-                previous->next = current->next;
-            current = current->next;
-            free(to_free);
-        }
-        else
-        {
-            previous = current;
-            current = current->next;
-        }
-    }
+	t_list *curr;
+	t_list *tmp;
+	t_list *to_return;
+	//from the begining cheack the if you can remove from the begining
+	while(*begin_list && cmp((*begin_list)->data, data_ref == 0))
+	{
+		curr = *begin_list;
+		*begin_list = (*begin_list)->next;
+		free(curr);
+	}
+	curr = *begin_list;
+	to_return = *begin_list;
+	//then the curr->next is often the adress that you want to remove from the list
+	while(curr && curr->next)
+	{
+		if(cmp(curr->next->data, data_ref) == 0)
+		{
+			tmp = curr->next;
+			curr->next = tmp->next;
+			free(tmp);
+		}
+		curr = curr->next;
+	}
+	return (to_return);
 }
 
 void ft_printlist(t_list *lst)
@@ -71,7 +74,7 @@ int main(void)
     printf("Original list:\n");
     ft_printlist(lst);
 
-    ft_list_remove_if(&lst, (void *)(long)5, &cmp);
+    lst = ft_list_remove_if(&lst, (void *)(long)5, &cmp);
 
     printf("--------------------------------------------------------\n");
     printf("Modified list:\n");
