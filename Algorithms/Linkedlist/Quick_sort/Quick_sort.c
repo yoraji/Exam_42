@@ -13,6 +13,8 @@ struct Node *create(int data){
     return temp;
 }
 
+// not complited yet
+
 void printList(struct Node *head){
     struct Node *curr = head;
     while(curr->next != NULL){
